@@ -1,0 +1,14 @@
+{
+  "name": "meridian",
+  "version": "1.0.0",
+  "description": "Ask about your Meridian projects, risks, milestones, change requests, status reports and timesheets, and log or edit your time entries, through the hosted Meridian MCP server. Sign in with your Meridian account on first connect.",
+  "author": {
+    "name": "Meridian",
+    "url": "https://www.meridian4pm.com"
+  },
+  "homepage": "https://www.meridian4pm.com",
+  "repository": "https://github.com/meridian4pm/meridian-grok-plugin",
+  "license": "MIT",
+  "keywords": ["meridian", "meridian pmo", "meridian4pm", "meridian mcp"],
+  "logo": "assets/logo.svg"
+}
