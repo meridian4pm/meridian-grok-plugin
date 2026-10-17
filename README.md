@@ -2,8 +2,8 @@
 
 Official plugin for [Meridian](https://www.meridian4pm.com), the PMBOK-aligned project
 management office platform. Connect Grok to your Meridian workspace and ask about your
-projects, risks, milestones, change requests, status reports and timesheets, or log and correct
-your own time entries without leaving your editor.
+projects, risks, milestones, change requests, status reports, stakeholders, retrospectives,
+access reviews and timesheets, or log your time and save status reports without leaving your editor.
 
 Maintained by Meridian (WireApps Ltd).
 
@@ -12,7 +12,7 @@ Maintained by Meridian (WireApps Ltd).
 | Component | Path | Purpose |
 | --- | --- | --- |
 | MCP server | `.mcp.json` | Connects to the hosted Meridian MCP server over HTTP |
-| Skill | `skills/meridian/SKILL.md` | Tells Grok which tool fits which question, and how to write time entries safely |
+| Skill | `skills/meridian/SKILL.md` | Tells Grok which tool fits which question, and how to write safely |
 | Manifests | `.grok-plugin/plugin.json`, `.claude-plugin/plugin.json` | Plugin metadata |
 
 The plugin has no hooks, no commands, no local scripts and no dependencies.
@@ -21,15 +21,17 @@ The plugin has no hooks, no commands, no local scripts and no dependencies.
 
 - A Meridian organization on a paid plan.
 - An organization admin has turned on **MCP connections** in Settings, Integrations.
-- To log or edit time, the admin has also turned on **write access** for MCP connections.
+- To log time or save status reports, the admin has also turned on **write access** for MCP
+  connections. Saving status reports is for Admins and Scrum Masters.
 - Your role is not Guest.
 
 ## Connecting
 
 Install the plugin, then start a session. On the first call Grok opens your browser to sign in
 to Meridian and shows an Allow page listing what the connection can do. Read access is always
-included. If your organization allows it, the Allow page also offers "Also let it log and edit
-your time entries"; untick it for a read-only connection.
+included. Every app is offered the same access: everything your role and organization allow.
+The write permissions (log time, save status reports) are ticked by default; untick them for a
+read-only connection.
 
 You can see and disconnect every connected app in Meridian under Settings, Integrations,
 Connected apps. Changing your Meridian password disconnects them all.
@@ -37,13 +39,15 @@ Connected apps. Changing your Meridian password disconnects them all.
 ## Tools
 
 Read (scope `read:core`): `list_projects`, `get_project`, `get_risk_register`,
-`get_status_report`, `list_milestones`, `list_change_requests`, `list_resources`,
-`list_time_entries`, `get_timesheet_summary`, `get_team_status`, `list_time_projects`,
-`list_time_tags`, `get_my_access`.
+`get_status_report`, `get_status_report_context`, `list_milestones`, `list_change_requests`,
+`list_resources`, `list_time_entries`, `get_timesheet_summary`, `get_team_status`,
+`list_time_projects`, `list_time_tags`, `get_my_access`, `list_stakeholders`, `get_stakeholder`,
+`list_retrospectives`, `get_retrospective`, `list_retro_action_items`, `get_access_matrix`,
+`get_access_review_status`, `get_access_entry_history`.
 
-Write (scope `write:time-tracking`): `create_time_entry`, `update_time_entry`. Both support a
-`dryRun` preview, and the skill asks Grok to confirm with you before writing. There are no
-delete tools.
+Write: `create_time_entry`, `update_time_entry` (scope `write:time-tracking`) and
+`create_status_report` (scope `write:status-reports`). All support a `dryRun` preview, and the
+skill asks Grok to confirm with you before writing. There are no delete tools.
 
 Every tool is limited to your own organization and your role's permissions in Meridian. Calls
 are rate limited and recorded in your organization's audit log.
