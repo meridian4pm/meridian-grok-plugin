@@ -3,7 +3,8 @@
 Official plugin for [Meridian](https://www.meridian4pm.com), the PMBOK-aligned project
 management office platform. Connect Grok to your Meridian workspace and ask about your
 projects, risks, milestones, change requests, status reports, stakeholders, retrospectives,
-access reviews and timesheets, or log your time and save status reports without leaving your editor.
+access reviews and timesheets, or log your time, run your timer and save status reports without
+leaving your editor.
 
 Maintained by Meridian (WireApps Ltd).
 
@@ -41,13 +42,21 @@ Connected apps. Changing your Meridian password disconnects them all.
 Read (scope `read:core`): `list_projects`, `get_project`, `get_risk_register`,
 `get_status_report`, `get_status_report_context`, `list_milestones`, `list_change_requests`,
 `list_resources`, `list_time_entries`, `get_timesheet_summary`, `get_team_status`,
-`list_time_projects`, `list_time_tags`, `get_my_access`, `list_stakeholders`, `get_stakeholder`,
-`list_retrospectives`, `get_retrospective`, `list_retro_action_items`, `get_access_matrix`,
-`get_access_review_status`, `get_access_entry_history`.
+`list_time_projects`, `list_time_tags`, `get_active_timer`, `get_my_access`, `list_stakeholders`,
+`get_stakeholder`, `list_retrospectives`, `get_retrospective`, `list_retro_action_items`,
+`get_access_matrix`, `get_access_review_status`, `get_access_entry_history`.
 
-Write: `create_time_entry`, `update_time_entry` (scope `write:time-tracking`) and
-`create_status_report` (scope `write:status-reports`). All support a `dryRun` preview, and the
-skill asks Grok to confirm with you before writing. There are no delete tools.
+Write (all need your organization's write access switched on):
+
+| Tool | Scope | Who |
+| --- | --- | --- |
+| `create_time_entry`, `update_time_entry` | `write:time-tracking` | Admins, Scrum Masters, Members |
+| `start_timer`, `update_active_timer`, `stop_timer`, `discard_timer` | `write:time-tracking` | Admins, Scrum Masters, Members |
+| `create_status_report` | `write:status-reports` | Admins, Scrum Masters |
+| `report_meridian_issue` (send a bug report or feature request to the Meridian team) | `read:core` | Anyone who can connect |
+
+All support a `dryRun` preview, and the skill asks Grok to confirm with you before writing,
+stopping or discarding a timer. There are no delete tools.
 
 Every tool is limited to your own organization and your role's permissions in Meridian. Calls
 are rate limited and recorded in your organization's audit log.

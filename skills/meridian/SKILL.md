@@ -1,6 +1,6 @@
 ---
 name: meridian
-description: Use when the user asks about their Meridian projects, risks, milestones, change requests, status reports, stakeholders, retrospectives, access reviews, team, timesheets or time tracking, or wants to log time or save a status report in Meridian. Covers which Meridian MCP tool to call and the rules for writing safely.
+description: Use when the user asks about their Meridian projects, risks, milestones, change requests, status reports, stakeholders, retrospectives, access reviews, team, timesheets or time tracking, or wants to log time, start or stop a timer, save a status report, or report a problem with Meridian itself. Covers which Meridian MCP tool to call and the rules for writing safely.
 ---
 
 # Meridian
@@ -29,6 +29,7 @@ use is simply not listed.
 | Sprint retrospectives and their action items | `list_retrospectives`, `get_retrospective`, `list_retro_action_items` |
 | Who has access to which software, review due dates, an entry's history | `get_access_matrix`, `get_access_review_status`, `get_access_entry_history` |
 | Facts for drafting a status report (Admins, Scrum Masters) | `get_status_report_context` |
+| Is my timer running, and for how long? | `get_active_timer` |
 | What this connection is allowed to do | `get_my_access` |
 
 Start with a list tool to find ids, then call the detail tool. Dates are `YYYY-MM-DD`.
@@ -55,6 +56,26 @@ available only when the organization has turned on write access and the user kep
    `durationSeconds` together. Timestamps need an explicit UTC offset.
 7. An entry is at most 24 hours, and its end time cannot be in the future.
 
+## Running the timer
+
+`start_timer`, `update_active_timer`, `stop_timer` and `discard_timer` control the same timer the
+user sees in Meridian's header. They need the same write access and "log time" permission as time
+entries. Only one timer runs at a time.
+
+1. Call `get_active_timer` first, every time, so you act on the timer that is really running.
+2. `start_timer` is refused if a timer is already running: ask the user whether to stop or discard
+   it first. Project, task and description are optional at start, but send them if you know them.
+   It needs a fresh UUID v4 `idempotencyKey`.
+3. `update_active_timer` changes the project, task or description without stopping. It needs the
+   `timerId` and `version` (as `expectedVersion`) from `get_active_timer`.
+4. `stop_timer` saves the timer as a time entry. It needs `timerId`, `expectedVersion` and a fresh
+   UUID v4 `idempotencyKey`, and the entry must end up with a project and a description: ask the
+   user for any that are missing. Confirm with the user before calling it with `dryRun: false`.
+5. If `runningOver24h` is true the timer was probably forgotten. Ask the user when they really
+   stopped and send that as `endedAt`, or discard it and log the time with `create_time_entry`.
+6. `discard_timer` throws the elapsed time away and cannot be undone. Prefer `stop_timer` if the
+   user did any work, and always confirm before calling it with `dryRun: false`.
+
 ## Saving a status report
 
 `create_status_report` publishes a report under the user's name straight away and cannot be
@@ -72,5 +93,18 @@ on.
    `dryRun: false` and a fresh UUID v4 `idempotencyKey`.
 5. `reportDate` defaults to today; it cannot be in the future, earlier than the project's latest
    report, or more than 14 days back.
+
+## Reporting a problem with Meridian
+
+`report_meridian_issue` emails a bug report, feature request or question about Meridian itself
+to the Meridian team. Use it only when the user explicitly asks to report a problem with
+Meridian, never for issues or risks in their own projects and never on your own initiative.
+
+1. Write the description from what the user told you (what they did, what they expected, what
+   happened). Do not invent details.
+2. Call with `dryRun: true`, show the user the category and description, and only after they
+   agree call again with `dryRun: false` and a fresh UUID v4 `idempotencyKey`.
+3. It needs the organization's write access, and is limited to 3 reports an hour and 10 a day
+   per person.
 
 There are no delete tools. If the user wants something removed, tell them to do it in Meridian.
