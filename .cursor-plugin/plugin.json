@@ -1,0 +1,19 @@
+{
+  "name": "meridian",
+  "version": "1.2.0",
+  "description": "Ask Cursor about your Meridian projects, risks, milestones, change requests, status reports, stakeholders, retrospectives, access reviews and timesheets, and log time, run your timer or save status reports, through the hosted Meridian MCP server. Sign in with your Meridian account on first connect.",
+  "author": {
+    "name": "Meridian",
+    "email": "info@meridian4pm.com"
+  },
+  "homepage": "https://www.meridian4pm.com/mcp-server",
+  "repository": "https://github.com/meridian4pm/meridian-grok-plugin",
+  "license": "MIT",
+  "keywords": [
+    "meridian",
+    "meridian pmo",
+    "meridian4pm",
+    "meridian mcp"
+  ],
+  "logo": "assets/logo.svg"
+}

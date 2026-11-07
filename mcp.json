@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "meridian": {
+      "type": "http",
+      "url": "https://www.meridian4pm.com/api/mcp"
+    }
+  }
+}
