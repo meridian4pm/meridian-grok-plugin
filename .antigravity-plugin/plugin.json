@@ -1,0 +1,25 @@
+{
+  "name": "meridian",
+  "displayName": "Meridian",
+  "version": "1.3.0",
+  "description": "Ask about your Meridian projects, risks, milestones, status reports and timesheets, and log time or run your timer, through the hosted Meridian MCP server.",
+  "logo": "assets/logo-padded.svg",
+  "suggestedPrompts": [
+    "Which of my Meridian projects have high risks right now?",
+    "How much time did I log in Meridian this week?",
+    "Start a Meridian timer for the project I am working on"
+  ],
+  "author": {
+    "name": "Meridian",
+    "url": "https://www.meridian4pm.com"
+  },
+  "homepage": "https://www.meridian4pm.com/mcp-server",
+  "repository": "https://github.com/meridian4pm/meridian-grok-plugin",
+  "license": "MIT",
+  "keywords": [
+    "meridian",
+    "meridian pmo",
+    "meridian4pm",
+    "meridian mcp"
+  ]
+}

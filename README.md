@@ -12,12 +12,17 @@ Maintained by Meridian (WireApps Ltd).
 
 | Component | Path | Purpose |
 | --- | --- | --- |
-| MCP server | `.mcp.json` (Grok, Claude), `mcp.json` (Cursor) | Connects to the hosted Meridian MCP server over HTTP |
+| MCP server | `.mcp.json` (Grok, Claude), `mcp.json` (Cursor), `mcp_config.json` (Antigravity), `gemini-extension.json` (Gemini CLI) | Connects to the hosted Meridian MCP server over HTTP |
 | Skill | `skills/meridian/SKILL.md` | Tells the agent which tool fits which question, and how to write safely |
-| Manifests | `.grok-plugin/plugin.json`, `.claude-plugin/plugin.json`, `.cursor-plugin/plugin.json` | Plugin metadata |
+| Manifests | `.grok-plugin/plugin.json`, `.claude-plugin/plugin.json`, `.cursor-plugin/plugin.json`, `.antigravity-plugin/plugin.json` | Plugin metadata |
+| Logos | `assets/logo.svg`, `assets/logo-padded.svg` (Antigravity, which wants transparent padding) | Plugin icon |
 
-The same plugin installs in Grok Build, Cursor and Claude Code. Keep `.mcp.json` and `mcp.json`
-identical, and the three manifests on the same version.
+The same plugin installs in Grok Build, Cursor, Claude Code, Google Antigravity and Gemini CLI.
+Every MCP file points at the same server URL (Antigravity calls the field `serverUrl`, Gemini CLI
+`httpUrl`). Keep them in step, and keep all five manifests on the same version.
+
+Install in Antigravity with `agy plugin install https://github.com/meridian4pm/meridian-grok-plugin`,
+or in Gemini CLI with `gemini extensions install https://github.com/meridian4pm/meridian-grok-plugin`.
 
 The plugin has no hooks, no commands, no local scripts and no dependencies.
 
