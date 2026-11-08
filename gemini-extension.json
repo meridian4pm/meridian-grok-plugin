@@ -1,0 +1,10 @@
+{
+  "name": "meridian",
+  "version": "1.3.0",
+  "description": "Ask about your Meridian projects, risks, milestones, status reports and timesheets, and log time or run your timer, through the hosted Meridian MCP server.",
+  "mcpServers": {
+    "meridian": {
+      "httpUrl": "https://www.meridian4pm.com/api/mcp"
+    }
+  }
+}
