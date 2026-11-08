@@ -12,9 +12,12 @@ Maintained by Meridian (WireApps Ltd).
 
 | Component | Path | Purpose |
 | --- | --- | --- |
-| MCP server | `.mcp.json` | Connects to the hosted Meridian MCP server over HTTP |
-| Skill | `skills/meridian/SKILL.md` | Tells Grok which tool fits which question, and how to write safely |
-| Manifests | `.grok-plugin/plugin.json`, `.claude-plugin/plugin.json` | Plugin metadata |
+| MCP server | `.mcp.json` (Grok, Claude), `mcp.json` (Cursor) | Connects to the hosted Meridian MCP server over HTTP |
+| Skill | `skills/meridian/SKILL.md` | Tells the agent which tool fits which question, and how to write safely |
+| Manifests | `.grok-plugin/plugin.json`, `.claude-plugin/plugin.json`, `.cursor-plugin/plugin.json` | Plugin metadata |
+
+The same plugin installs in Grok Build, Cursor and Claude Code. Keep `.mcp.json` and `mcp.json`
+identical, and the three manifests on the same version.
 
 The plugin has no hooks, no commands, no local scripts and no dependencies.
 
